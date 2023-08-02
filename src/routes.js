@@ -86,14 +86,14 @@ var routes = [
   {
     path: "/Cautela",
     name: "Cautelar Aparelho",
-    icon: "fas fa-solid fa-file-lines text-green",
+    icon: "fas fa fa-mobile fa-file-lines text-green",
     component: <Cautelar/>,
     layout: "/admin",
   },
   {
     path: "/Cautela",
     name: "Descautelar Aparelho",
-    icon: "fas fa-solid fa-file-lines text-red",
+    icon: "fas fa-mobile fa-file-lines text-red",
     component: <Cautelar/>,
     layout: "/admin",
   },
@@ -101,14 +101,14 @@ var routes = [
   {
     path: "/Cautela",
     name: "Cautelar modem",
-    icon: "fas fa-solid fa-file-lines text-green",
+    icon: "fas fa-wifi text-green",
     component: <Cautelar/>,
     layout: "/admin",
   },
   {
     path: "/Cautela",
     name: "Descautelar modem",
-    icon: "fas fa-solid fa-file-lines text-red",
+    icon: "fas fa-wifi text-red",
     component: <Cautelar/>,
     layout: "/admin",
   },
@@ -116,7 +116,7 @@ var routes = [
   {
     path: "/Cautela",
     name: "Cautelar HT",
-    icon: "fas fa-solid fa-file-lines text-green",
+    icon: "fas fa-walkie-talkie text-green",
     component: <Cautelar/>,
     layout: "/admin",
   },
@@ -124,7 +124,7 @@ var routes = [
   {
     path: "/Cautela",
     name: "Descautelar HT",
-    icon: "fas fa-solid fa-file-lines text-red",
+    icon: "fas fa-walkie-talkie text-red",
     component: <Cautelar/>,
     layout: "/admin",
   },

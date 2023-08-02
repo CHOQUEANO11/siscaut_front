@@ -32,7 +32,7 @@ function Modall(args) {
         Adicionar
       </Button> 
           
-develop
+
       <Modal isOpen={modal} toggle={toggle} {...args}>
         <ModalHeader toggle={toggle}>Adicionar</ModalHeader>
         <ModalBody>

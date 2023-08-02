@@ -50,6 +50,7 @@ import {
 
 import Header from "components/Headers/Header.js";
 import Modall from "components/ModalAddModem/Modal";
+import ModalDel from "components/ModalDelete/Modal"
 
 const Aparelho = (props) => {
   const [activeNav, setActiveNav] = useState(1);
@@ -198,15 +199,12 @@ const Aparelho = (props) => {
                             Editar
                           </Button>
                         </Link>
+                          <ModalDel
+                          titulo="modem"
+                          Objeto="modem"
 
-                          <Button
-                            color="danger"
-                            // href="/admin/dashboard"
-                            
-                            size="sm"
-                          >
-                            Excluir
-                          </Button>
+
+                          />
                         </div>
                     </td>
                   </tr>

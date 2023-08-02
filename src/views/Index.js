@@ -50,6 +50,7 @@ import {
 
 import Header from "components/Headers/Header.js";
 import Modall from "components/ModalAddUser/Modal";
+import ModalDel from "components/ModalDelete/Modal"
 
 const Index = (props) => {
   const [activeNav, setActiveNav] = useState(1);
@@ -202,14 +203,10 @@ const Index = (props) => {
                           </Button>
                         </Link>
 
-                          <Button
-                            color="danger"
-                            // href="/admin/dashboard"
-                            
-                            size="sm"
-                          >
-                            Excluir
-                          </Button>
+                         <ModalDel
+                         titulo="Responsavel"
+                         Objeto="Responsavel"
+                         />
                         </div>
                     </td>
                   </tr>
