@@ -42,7 +42,11 @@ import {
 
 //FirebsaeConfigs
 import {db} from '../firebase'
-import {doc, setDoc, Collection, addDoc, collection, getDocs} from 'firebase/firestore'
+
+ 
+import {doc, setDoc, Collection, addDoc, collection, onSnapshot} from 'firebase/firestore'
+=======
+
 
 // core components
 import {
@@ -67,7 +71,11 @@ const Aparelho = (props) => {
 
 
     const [modelo, setModelo] = useState('')
-    const [imei1, setImei1] = useState('')
+
+
+    const [imei1, setImei1] =   useState('')
+  
+
     const [imei2, setImei2] = useState('')
     const [marca, setMarca] = useState('')
     const [listaAparelho,setListaAparelho] = useState([])
@@ -99,26 +107,47 @@ const Aparelho = (props) => {
   });
 }
 
+
+
+
+function teste(){
+  console.log(typeof(aparelhos) )
+}
+
+
+
+  //função de exibição 
+  useEffect(()=>{
+    async function loadAparelhos(){
+      const unsub = onSnapshot(collection(db,'Aparelhos'), (snapshot)=>{
+        let listaAparelhos = [];
+
+        snapshot.forEach((doc)=>{
+          listaAparelhos.push({
+            id: doc.id,
+            imei1: doc.data().imei1,
+            imei2: doc.data().imei2,
+            marca: doc.data().marca,
+            modelo: doc.data().modelo
+          })
+        })
+        setAparelhos(listaAparelhos);
+      });
+
+    }
+      loadAparelhos();
+
+  },[])
+
+
+
+
+
   const toggleNavs = (e, index) => {
     e.preventDefault();
     setActiveNav(index);
     setChartExample1Data("data" + index);
   };
-
-
-
-  async function getList(){
-
-    const postsRef =collection(db,"Aparelhos")
-    const response  = await getDocs(postsRef)
-    const data = response.docs.map((doc)=>({...doc.data(),id: doc.id}))
-
-    console.log('POSTREF' ,data)
-    setListaAparelho(data)
- 
-  }
-  useEffect(()=>{getList()},[])
-
 
 
 
@@ -164,6 +193,42 @@ const Aparelho = (props) => {
               <Table className="align-items-center table-flush" responsive>
         
                 <tbody>
+
+
+
+                   
+                   
+                   
+                   {aparelhos.map((aparelhos) =>{
+                    return(
+                      <tr key={aparelhos.id}>
+                        <th scope="row">{aparelhos.modelo}</th>
+                        <th>{aparelhos.marca}</th>
+                        <th>{aparelhos.imei1}</th>
+                        <th>{aparelhos.imei2}</th>
+                        <td>
+                      <div> <Link to="/auth/createUser">
+                    
+                        <Button
+                            color="success"
+                            // href="/admin/dashboard"
+                            size="sm"
+                          >
+                            Editar
+                          </Button>
+                        </Link>
+
+                          <Button color="danger" size="sm" onClick={teste}> Excluir </Button>
+                        </div>
+                    </td>
+                      </tr>
+                    )
+                   })}
+
+
+
+
+
                 <tr>
   
                     <ul className="lista">
@@ -174,6 +239,7 @@ const Aparelho = (props) => {
                       <th>AÇÕES</th>
                     </ul>
                   </tr>
+
 
                   <tr>
                     <ul>
