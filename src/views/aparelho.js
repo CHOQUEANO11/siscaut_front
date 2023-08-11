@@ -42,7 +42,8 @@ import {
 
 //FirebsaeConfigs
 import {db} from '../firebase'
-import {doc, setDoc, Collection, addDoc, collection, getDocs} from 'firebase/firestore'
+ feature/banco_de_dados
+import {doc, setDoc, Collection, addDoc, collection, onSnapshot} from 'firebase/firestore'
 
 // core components
 import {
@@ -67,10 +68,14 @@ const Aparelho = (props) => {
 
 
     const [modelo, setModelo] = useState('')
-    const [imei1, setImei1] = useState('')
+feature/banco_de_dados
+    const [imei1, setImei1] =   useState('')
+  
     const [imei2, setImei2] = useState('')
     const [marca, setMarca] = useState('')
     const [listaAparelho,setListaAparelho] = useState([])
+
+    const [aparelhos,setAparelhos] = useState([])
 
 
   if (window.Chart) {
@@ -98,6 +103,40 @@ const Aparelho = (props) => {
 
   });
 }
+
+ feature/banco_de_dados
+
+function teste(){
+  console.log(typeof(aparelhos) )
+}
+
+
+
+  //função de exibição 
+  useEffect(()=>{
+    async function loadAparelhos(){
+      const unsub = onSnapshot(collection(db,'Aparelhos'), (snapshot)=>{
+        let listaAparelhos = [];
+
+        snapshot.forEach((doc)=>{
+          listaAparelhos.push({
+            id: doc.id,
+            imei1: doc.data().imei1,
+            imei2: doc.data().imei2,
+            marca: doc.data().marca,
+            modelo: doc.data().modelo
+          })
+        })
+        setAparelhos(listaAparelhos);
+      });
+
+    }
+      loadAparelhos();
+
+  },[])
+
+
+
 
   const toggleNavs = (e, index) => {
     e.preventDefault();
@@ -137,20 +176,23 @@ const Aparelho = (props) => {
                 <Row className="align-items-center">
                   <div className="col">
                     <h3 className="mb-0">Aparelhos</h3>
-                  </div>
+                   </div>
                   <div> 
                     <Modall
                     valueModelo={modelo}
                     valueAltModelo={(e)=>setModelo(e)}
 
+                    
                     valueMarca={marca}
                     valueAltMarca={(e)=>setMarca(e)}
+
 
                     value1imei={imei1}
                     valueAlt1imei={(e)=>setImei1(e)}
 
+
                     value2imei={imei2}
-                    valueAlt2imei={(e)=>setImei2(e)}
+                    valueAlt2imei={e=>setImei2(e)}
 
                     
                     Add={handleAdd}
@@ -164,45 +206,67 @@ const Aparelho = (props) => {
               <Table className="align-items-center table-flush" responsive>
         
                 <tbody>
-                <tr>
-  
-                    <ul className="lista">
-                      <th>Marca</th>
-                      <th>Modelo</th>
-                      <th>1º IMEI</th>
-                      <th>2º IMEI</th>
-                      <th>AÇÕES</th>
-                    </ul>
+feature/banco_de_dados
+
+                   
+                   
+                   
+                   {aparelhos.map((aparelhos) =>{
+                    return(
+                      <tr key={aparelhos.id}>
+                        <th scope="row">{aparelhos.modelo}</th>
+                        <th>{aparelhos.marca}</th>
+                        <th>{aparelhos.imei1}</th>
+                        <th>{aparelhos.imei2}</th>
+                        <td>
+                      <div> <Link to="/auth/createUser">
+                    
+                        <Button
+                            color="success"
+                            // href="/admin/dashboard"
+                            size="sm"
+                          >
+                            Editar
+                          </Button>
+                        </Link>
+
+                          <Button color="danger" size="sm" onClick={teste}> Excluir </Button>
+                        </div>
+                    </td>
+                      </tr>
+                    )
+                   })}
+
+
+
+
+
+
+                  {/* <tr>
+                    <th scope="row">Nilson</th>
+                    <td>4,569</td>
+                    <td>340</td>
+                    <td>
+                    </td>
+                    <td>
+                      <div> <Link to="/auth/createUser">
+                    
+                        <Button
+                            color="success"
+                            // href="/admin/dashboard"
+                            size="sm"
+                          >
+                            Editar
+                          </Button>
+                        </Link>
+
+                          <Button color="danger" size="sm" onClick={teste}> Excluir </Button>
+                        </div>
+                    </td>
                   </tr>
+ */}
 
-                  <tr>
-                    <ul>
-                      {listaAparelho.map((post)=>{
-                        return(
-                          <div className="lista">
-                            
-                            <td>{post.modelo}</td>
-                            <td>{post.marca}</td>
-                            <td>{post.imei1}</td>
-                            <td>{post.imei2}</td>
-
-                            <td> 
-                            <Link to="/auth/createUser">
-                            <Button color="success" size="sm"> Editar </Button>
-                            </Link>
-                            <Button color="danger" size="sm"> Excluir </Button>
-                            </td>
-
-                          </div>
-                        )
-
-                      })}
-                    </ul>
-
-                
-              
-                  </tr>
-
+        
                   
                
                  
