@@ -44,8 +44,9 @@ import {
 import {db} from '../firebase'
 
  
-import {doc, setDoc, Collection, addDoc, collection, onSnapshot} from 'firebase/firestore'
-=======
+
+import {doc, setDoc, Collection, addDoc, collection, onSnapshot, updateDoc} from 'firebase/firestore'
+
 
 
 // core components
@@ -78,6 +79,9 @@ const Aparelho = (props) => {
 
     const [imei2, setImei2] = useState('')
     const [marca, setMarca] = useState('')
+    const [idAparelho, setIdAparelho] = useState('')
+    
+
     const [listaAparelho,setListaAparelho] = useState([])
 
 
@@ -107,14 +111,16 @@ const Aparelho = (props) => {
   });
 }
 
-
-
-
-function teste(){
-  console.log(typeof(aparelhos) )
+//função de Edit
+async function editAparelho(){
+  const aparelhos= doc(db,"Aparelhos", idAparelho)
+  await updateDoc(aparelhos,{
+    imei1: imei1,
+    imei2: imei2,
+    marca:marca,
+    modelo:modelo,
+  })
 }
-
-
 
   //função de exibição 
   useEffect(()=>{
@@ -169,6 +175,10 @@ function teste(){
                   </div>
                   <div> 
                     <Modall
+                    nameBtn= "Adicionar"
+
+                    header="Adicionar Aparelho"
+
                     valueModelo={modelo}
                     valueAltModelo={(e)=>setModelo(e)}
 
@@ -191,15 +201,27 @@ function teste(){
                 </Row>
               </CardHeader>
               <Table className="align-items-center table-flush" responsive>
-        
+
+
+
+              <thead className="thead-light">
+                  <tr className="justificar">
+                    <th scope="col">Modelo</th>
+                    <th scope="col">Marca</th>
+                    <th scope="col" >1º IMEI</th>
+                    <th scope="col" >2º IMEI</th>
+                    <th scope="col">Ações</th>
+                  </tr>
+                </thead>
+
+
                 <tbody>
 
-
-
-                   
-                   
                    
                    {aparelhos.map((aparelhos) =>{
+                          /* setMarca(aparelhos.modelo) */
+                      
+
                     return(
                       <tr key={aparelhos.id}>
                         <th scope="row">{aparelhos.modelo}</th>
@@ -207,18 +229,31 @@ function teste(){
                         <th>{aparelhos.imei1}</th>
                         <th>{aparelhos.imei2}</th>
                         <td>
-                      <div> <Link to="/auth/createUser">
+                      <div> 
                     
-                        <Button
-                            color="success"
-                            // href="/admin/dashboard"
-                            size="sm"
-                          >
-                            Editar
-                          </Button>
-                        </Link>
+                       <Modall
+                       nameBtn="Editar"
 
-                          <Button color="danger" size="sm" onClick={teste}> Excluir </Button>
+                       header="Adicionar Aparelhos"
+
+                    valueModelo={aparelhos.modelo}
+                    valueAltModelo={(e)=>setModelo(e)}
+                    
+                    valueMarca={aparelhos.marca}
+                    valueAltMarca={(e)=>setMarca(e)}
+
+                    value1imei={aparelhos.imei1}
+                    valueAlt1imei={(e)=>setImei1(e)}
+
+                    value2imei={aparelhos.imei2}
+                    valueAlt2imei={e=>setImei2(e)}
+                    
+                    Add={editAparelho}
+                       
+                       />
+                        
+
+                          <Button color="danger" size="sm" > Excluir </Button>
                         </div>
                     </td>
                       </tr>

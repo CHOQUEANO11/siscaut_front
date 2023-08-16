@@ -27,12 +27,12 @@ function Modall(args) {
   return (
     <div>
       <Button size="sm"color="success" onClick={toggle}>
-        Adicionar
+        {args.nameBtn}
       </Button>
 
 
       <Modal isOpen={modal} toggle={toggle} {...args}>
-        <ModalHeader toggle={toggle}>Adicionar Aparelho</ModalHeader>
+        <ModalHeader toggle={toggle}>{args.header}</ModalHeader>
         <ModalBody>
           
           
