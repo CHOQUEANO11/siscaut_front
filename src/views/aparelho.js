@@ -234,7 +234,7 @@ async function editAparelho(){
                        <Modall
                        nameBtn="Editar"
 
-                       header="Adicionar Aparelhos"
+                       header="Adicionar Aparelho"
 
                     valueModelo={aparelhos.modelo}
                     valueAltModelo={(e)=>setModelo(e)}

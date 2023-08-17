@@ -177,7 +177,7 @@ const Aparelho = (props) => {
                 <thead className="thead-light">
                   <tr className="justificar">
                     <th scope="col">Modelo</th>
-                    <th scope="col">Marca</th>
+                    <th scope="col">Marcaa</th>
                     <th scope="col" className="ajeitar">IMEI</th>
                     <th scope="col">Ações</th>
                   </tr>
