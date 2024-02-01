@@ -6,6 +6,8 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter,
     Row,
     Col,
   Alert,
+  CustomInput,
+  Label,
 Spinner } from 'reactstrap';
 
     import {  toast } from 'react-toastify';
@@ -42,6 +44,8 @@ function Modall(props) {
     const [idMilitar, setIdMilitar] = useState ('')
 
     const [nomeFiscal, setNomeFiscal] = useState ('')
+    const [manual, setManual] = useState ('')
+    const [carregador, setCarregador] = useState ('')
     const [nomeMilitar, setNomeMilitar] = useState ('')
 
 
@@ -160,7 +164,7 @@ function Modall(props) {
     /* const dataFormatada = `${dia}/${mes}/${ano}`; */
 
     try {
-      if(idChip===""||idMilitar===""|| nomeFiscal===""){
+      if(idChip===""||idMilitar===""|| nomeFiscal==="" || manual=== "" || carregador===""){
         
         setEmptyevalue(true)
         
@@ -171,6 +175,8 @@ function Modall(props) {
         militar: idMilitar,
         fiscal_caut: nomeFiscal,
         date_caut:  dataAtual.toISOString(),
+        manual: manual,
+        carregador: carregador,
   
       });
   
@@ -267,6 +273,7 @@ function Modall(props) {
                       </Col>
 
 
+
                       <Col lg="10">
                         <FormGroup>
                           <label
@@ -288,10 +295,67 @@ function Modall(props) {
                           
                         </FormGroup>
                       </Col>
+
+                       <Col lg="4">
+                        
+                    
+                         <FormGroup>
+                            <Label for="exampleCheckbox">Tem manual ?</Label>
+                          </FormGroup>
+                          <FormGroup></FormGroup>
+
+
+
+
+                        <div className="pl-lg-4">
+      
+                            <Row>
+
+                            <Col lg="4">
+
+                            <CustomInput type="radio" id="exampleCustomRadio" onChange={(e)=> setManual (e.target.value)} name="customRadio" label="SIM" value="1" />
+                            </Col>
+                            <Col lg="10">
+
+                            <CustomInput type="radio" id="exampleCustomRadio2" onChange={(e)=> setManual (e.target.value)} name="customRadio" label="NÃO" value="0" />
+                            </Col>
+                            {emptyevalue && manual ==='' ? <Alert color='danger'>Informe se possui manual.</Alert> :''}
+                            </Row>
+                            
+
+
+                            </div>
+                      </Col>
+
+                      <Col lg="4">
+
+                         <FormGroup>
+                            <Label for="exampleCheckbox">Tem carregador?</Label>
+                          </FormGroup>
+                          <FormGroup></FormGroup>
+
+
+
+
+                        <div className="pl-lg-4">
+                            <Row> 
+                            <Col lg="4">
+                            <CustomInput type="radio" id="CustomRadioCarregador" onChange={(e)=> setCarregador (e.target.value)} name="CustomRadioCarregador" label="SIM" value="1" />
+                            </Col>
+                            <Col lg="10">
+                            <CustomInput type="radio" id="CustomRadio2Carregador" onChange={(e)=> setCarregador (e.target.value)} name="CustomRadioCarregador" label="NÃO" value="0" />
+                            </Col>
+                            {emptyevalue && carregador ==='' ? <Alert color='danger'>Informe se possui carregador .</Alert> :''}
+                            </Row>
+                            
+
+
+                            </div>
+                      </Col>
                       
                                
 
-                    <Col lg="6">
+                    <Col lg="6" className='mt-5'>
                         <FormGroup>
                           <label
                             className="form-control-label"
@@ -313,7 +377,7 @@ function Modall(props) {
                         
 
 
-                      <Col lg="6">
+                      <Col lg="6" className='mt-5'>
                         <FormGroup>
                           <label
                             className="form-control-label"
